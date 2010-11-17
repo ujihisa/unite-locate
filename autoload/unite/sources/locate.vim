@@ -12,7 +12,8 @@ function! s:unite_source.gather_candidates(args, context)
     return []
   endif
 
-  return map(split(system('locate ' . a:context.input), "\n"), '{
+  return map(
+        \ split(system(printf('locate -l %d %s', s:unite_source.max_candidates, a:context.input), "\n")), '{
         \ "word": v:val,
         \ "source": "locate",
         \ "kind": "file",
