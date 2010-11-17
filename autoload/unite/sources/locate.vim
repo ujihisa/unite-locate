@@ -23,7 +23,7 @@ function! s:unite_source.gather_candidates(args, context)
 endfunction
 
 function! unite#sources#locate#define()
-  return s:unite_source
+  return executable('locate') ? s:unite_source : []
 endfunction
 
 
