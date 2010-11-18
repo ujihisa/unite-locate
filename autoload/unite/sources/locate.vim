@@ -4,16 +4,14 @@ set cpo&vim
 let s:unite_source = {
       \ 'name': 'locate',
       \ 'max_candidates': 30,
-      \ 'is_volatile' : 1,
+      \ 'is_volatile': 1,
+      \ 'required_pattern_length': 3,
       \ }
 
 function! s:unite_source.gather_candidates(args, context)
-  if len(a:context.input) < 3
-    return []
-  endif
-
   return map(
-        \ split(system(printf('locate -l %d %s', s:unite_source.max_candidates, a:context.input), "\n")), '{
+        \ split(system(printf('locate -l %d %s', s:unite_source.max_candidates, a:context.input), "\n")),
+        \ '{
         \ "word": v:val,
         \ "source": "locate",
         \ "kind": "file",
