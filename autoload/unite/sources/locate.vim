@@ -12,14 +12,14 @@ let s:unite_source = {
 " only existing files.
 function! s:is_linux()
   " Linux version only has -V option
-  call system('locate -V')
-  return !v:shell_error
+  call unite#util#system('locate -V')
+  return !unite#util#get_last_status()
 endfunction
 let s:additional_options = s:is_linux() ? '-e' : ''
 
 function! s:unite_source.gather_candidates(args, context)
   return map(
-        \ split(system(printf(
+        \ split(unite#util#system(printf(
         \     'locate -l %d %s %s',
         \     s:unite_source.max_candidates,
         \     s:additional_options,
