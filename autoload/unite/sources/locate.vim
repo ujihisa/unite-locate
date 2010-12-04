@@ -19,12 +19,13 @@ let s:additional_options = s:is_linux() ? '-e' : ''
 
 function! s:unite_source.gather_candidates(args, context)
   return map(
-        \ split(unite#util#system(printf(
+        \ split(
+        \   unite#util#system(printf(
         \     'locate -l %d %s %s',
         \     s:unite_source.max_candidates,
         \     s:additional_options,
-        \     a:context.input),
-        \   "\n")),
+        \     a:context.input)),
+        \   "\n"),
         \ '{
         \ "word": v:val,
         \ "source": "locate",
