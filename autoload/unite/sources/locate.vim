@@ -15,15 +15,19 @@ function! s:is_linux()
   call unite#util#system('locate -V')
   return !unite#util#get_last_status()
 endfunction
-let s:additional_options = s:is_linux() ? '-e' : ''
+
+if executable('locate')
+  let s:locate_command = 'locate -l %d'.(s:is_linux() ? ' -e' : '').' %s'
+elseif (has('win32') || has('win64')) && executable('es')
+  let s:locate_command = 'es -i -r -n %d %s'
+endif
 
 function! s:unite_source.gather_candidates(args, context)
   return map(
         \ split(
         \   unite#util#system(printf(
-        \     'locate -l %d %s %s',
+        \     s:locate_command,
         \     s:unite_source.max_candidates,
-        \     s:additional_options,
         \     a:context.input)),
         \   "\n"),
         \ '{
@@ -36,7 +40,7 @@ function! s:unite_source.gather_candidates(args, context)
 endfunction
 
 function! unite#sources#locate#define()
-  return executable('locate') ? s:unite_source : []
+  return exists('s:locate_command') ? s:unite_source : []
 endfunction
 
 
