@@ -10,10 +10,13 @@
 
   * http://github.com/ujihisa/unite-locate (development)
 
-  Dependency: locate command
+  Dependency: locate command or es command
 "install_details": |
   After you install Shougo's unite.vim, unarchive the zip file into a directory that is under &rtp of your Vim, including ~/.vim dir.
 "versions":
+  - '1.6': |
+      * Option value g:unite_locate_command to specify what command to use
+      * help file
   - '1.5': |
       * Windows "everything" support. Thanks mattn!
   - '1.4': |
