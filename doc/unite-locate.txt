@@ -14,7 +14,7 @@ Requirement:
 - locate command (Non-Windows) or es command (Windows)
 
 Latest version:
-http://github.com/ujihisa/unite-locate
+https://github.com/ujihisa/unite-locate
 
 
 
