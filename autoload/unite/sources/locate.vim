@@ -20,7 +20,7 @@ if exists('g:unite_locate_command')
   let s:locate_command = g:unite_locate_command
 elseif executable('locate')
   let s:locate_command = 'locate -l %d'.(s:is_linux() ? ' -e' : '').' %s'
-elseif (has('win32') || has('win64')) && executable('es')
+elseif unite#util#is_windows() && executable('es')
   let s:locate_command = 'es -i -r -n %d %s'
 endif
 
