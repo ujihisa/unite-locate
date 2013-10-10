@@ -16,21 +16,30 @@ function! s:is_linux()
   return !unite#util#get_last_status()
 endfunction
 
+function! s:locate_is_disabled()
+  return ! filereadable('/var/db/locate.database')
+        \ && ! filereadable($LOCATE_PATH)
+endfunction
+
 if exists('g:unite_locate_command')
   let s:locate_command = g:unite_locate_command
+elseif has('mac') && s:locate_is_disabled()
+  let s:locate_command = 'mdfind -name {query} | head -n {count}'
 elseif executable('locate')
-  let s:locate_command = 'locate -l %d'.(s:is_linux() ? ' -e' : '').' %s'
+  let s:locate_command = 'locate -l {count}'.(s:is_linux() ? ' -e' : '').' {query}'
 elseif unite#util#is_windows() && executable('es')
-  let s:locate_command = 'es -i -r -n %d %s'
+  let s:locate_command = 'es -i -r -n {count} {query}'
 endif
 
 function! s:unite_source.gather_candidates(args, context)
   return map(
         \ split(
-        \   unite#util#system(printf(
-        \     s:locate_command,
-        \     s:unite_source.max_candidates,
-        \     a:context.input)),
+        \   unite#util#system(
+        \     substitute(
+        \       substitute(
+        \         s:locate_command, '{count}', s:unite_source.max_candidates, ''
+        \       ), '{query}', a:context.input, ''
+        \     )),
         \   "\n"),
         \ '{
         \ "word": v:val,
