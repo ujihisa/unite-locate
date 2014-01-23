@@ -17,8 +17,8 @@ function! s:is_linux()
 endfunction
 
 function! s:locate_is_disabled()
-  return ! filereadable('/var/db/locate.database')
-        \ && ! filereadable($LOCATE_PATH)
+  return !filereadable('/var/db/locate.database')
+        \ && !filereadable($LOCATE_PATH)
 endfunction
 
 if exists('g:unite_locate_command')
