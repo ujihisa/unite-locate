@@ -31,6 +31,10 @@ g:unite_locate_command			*g:unite_locate_command*
 	time, and %s is the user input. On Mac it can be mdfind instead of
 	locate, depending on the system.
 
+	locate: for UNIX. mlocate.
+	mdfind: ???
+	es: for Windows. voidtools's everything.
+
 
 
 
