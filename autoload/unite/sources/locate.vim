@@ -37,9 +37,10 @@ function! s:unite_source.gather_candidates(args, context)
         \   unite#util#system(
         \     substitute(
         \       substitute(
-        \         s:locate_command, '{count}', s:unite_source.max_candidates, ''
-        \       ), '{query}', a:context.input, ''
-        \     )),
+        \         s:locate_command, '{count}', s:unite_source.max_candidates, ''),
+        \       '{query}',
+        \       a:context.input,
+        \       '')),
         \   "\n"),
         \ '{
         \ "word": v:val,
