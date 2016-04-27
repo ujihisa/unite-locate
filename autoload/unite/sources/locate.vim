@@ -21,9 +21,7 @@ function! s:locate_is_disabled()
         \ && !filereadable($LOCATE_PATH)
 endfunction
 
-if exists('g:unite_locate_command')
-  let s:locate_command = g:unite_locate_command
-elseif has('mac') && s:locate_is_disabled()
+if has('mac') && s:locate_is_disabled()
   let s:locate_command = 'mdfind -name {query} | head -n {count}'
 elseif executable('locate')
   let s:locate_command = 'locate -l {count}'.(s:is_linux() ? ' -e' : '').' {query}'
@@ -32,12 +30,17 @@ elseif unite#util#is_windows() && executable('es')
 endif
 
 function! s:unite_source.gather_candidates(args, context)
+  if exists('g:unite_locate_command')
+    let locate_command = g:unite_locate_command
+  else
+    let locate_command = s:locate_command
+  endif
   return map(
         \ split(
         \   unite#util#system(
         \     substitute(
         \       substitute(
-        \         s:locate_command, '{count}', s:unite_source.max_candidates, ''),
+        \         locate_command, '{count}', s:unite_source.max_candidates, ''),
         \       '{query}',
         \       a:context.input,
         \       '')),
