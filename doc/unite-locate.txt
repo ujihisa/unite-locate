@@ -25,11 +25,11 @@ CUSTOMIZING					*unite-locate-customizing*
 g:unite_locate_command			*g:unite_locate_command*
 	Specifies an alternative command to lookup files. If you don't give
 	this value and you have locate command and you are not on Linux, it's
-	same to have given 'locate -l %d %s' as this value. In the same
-	condition but on Linux, it's 'locate -l %d -e %s'. On Windows it'll be
-	'es -i -r -n %d %s'. %d means the number of items to fetch at one
-	time, and %s is the user input. On Mac it can be mdfind instead of
-	locate, depending on the system.
+	same to have given 'locate -l {count} {query}' as this value. In the
+	same condition but on Linux, it's 'locate -l {count} -e {query}'. On
+	Windows it'll be 'es -i -r -n {count} {query}'. {count} means the
+	number of items to fetch at one time, and {query} is the user input.
+	On Mac it can be mdfind instead of locate, depending on the system.
 
 	locate: for UNIX. mlocate.
 	mdfind: ???
